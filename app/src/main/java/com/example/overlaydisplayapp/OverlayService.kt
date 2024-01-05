@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 
 class OverlayService : Service() {
     private var overlayView: View? = null
@@ -27,10 +28,6 @@ class OverlayService : Service() {
             OverlayActions.START.name -> {
                 start()
             }
-
-            OverlayActions.STOP.name -> {
-                stopSelf()
-            }
         }
         return super.onStartCommand(intent, flags, startId)
     }
@@ -38,6 +35,10 @@ class OverlayService : Service() {
     private fun start() {
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         overlayView = inflater.inflate(R.layout.overlay_layout, null)
+
+        overlayView?.findViewById<Button>(R.id.dismiss)?.setOnClickListener {
+            stopSelf()
+        }
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,

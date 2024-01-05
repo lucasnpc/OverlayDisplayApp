@@ -12,11 +12,8 @@ import android.widget.Button
 
 class OverlayService : Service() {
     private var overlayView: View? = null
-    private var windowManager: WindowManager? = null
-
-    override fun onCreate() {
-        super.onCreate()
-        windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+    private val windowManager: WindowManager? by lazy {
+        getSystemService(WINDOW_SERVICE) as WindowManager
     }
 
     override fun onBind(intent: Intent?): IBinder? {

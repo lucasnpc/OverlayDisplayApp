@@ -2,7 +2,4 @@ package com.example.overlaydisplayapp
 
 import android.app.Application
 
-class OverlayApp : Application() {
-
-
-}
+class OverlayApp : Application()

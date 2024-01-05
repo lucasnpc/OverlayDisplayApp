@@ -10,7 +10,9 @@ import java.time.ZoneId
 import java.util.UUID
 
 class OverlayAlarmScheduler(private val context: Context) : AlarmScheduler {
-    private val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+    private val alarmManager by lazy {
+        context.getSystemService(ALARM_SERVICE) as AlarmManager
+    }
     private val id by lazy {
         UUID.randomUUID().hashCode()
     }

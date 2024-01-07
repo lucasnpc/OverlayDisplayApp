@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (Settings.canDrawOverlays(this)) {
-                OverlayAlarmScheduler(this).schedule()
+                alarmScheduler.schedule()
             }
         }
 

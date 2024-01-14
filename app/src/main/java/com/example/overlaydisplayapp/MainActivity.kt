@@ -6,15 +6,17 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
-    private val alarmScheduler: AlarmScheduler by lazy {
-        OverlayAlarmScheduler(this)
-    }
+
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (Settings.canDrawOverlays(this)) {
-                alarmScheduler.schedule()
+                startWorker()
             }
         }
 
@@ -28,7 +30,18 @@ class MainActivity : ComponentActivity() {
                 startForResult.launch(it)
             }
         } else {
-            alarmScheduler.schedule()
+            startWorker()
         }
+    }
+
+    private fun startWorker() {
+        val workRequest = PeriodicWorkRequestBuilder<AlarmWorker>(24, TimeUnit.HOURS)
+            .build()
+
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+            AlarmWorker.WORKER_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            workRequest
+        )
     }
 }

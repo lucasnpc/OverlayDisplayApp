@@ -1,10 +1,11 @@
-package com.example.overlaydisplayapp
+package com.example.overlaydisplayapp.overlayfeature.alarmscheduler
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import com.example.overlaydisplayapp.overlayfeature.receivers.OverlayReceiver
 import java.util.Calendar
 
 class OverlayAlarmScheduler(private val context: Context) : AlarmScheduler {

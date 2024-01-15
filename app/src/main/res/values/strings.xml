@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OverlayDisplayApp</string>
+    <string name="overlay_notificiation_title">Overlay App Permission Required</string>
+    <string name="overlay_notification_text">Please grant view overlay permission.</string>
 </resources>

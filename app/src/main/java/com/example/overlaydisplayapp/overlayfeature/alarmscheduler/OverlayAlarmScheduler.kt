@@ -28,10 +28,6 @@ class OverlayAlarmScheduler(private val context: Context) : AlarmScheduler {
             set(Calendar.SECOND, 0)
         }
 
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1)
-        }
-
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,

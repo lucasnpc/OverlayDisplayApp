@@ -1,19 +1,20 @@
 package com.example.overlaydisplayapp.overlayfeature.notification
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.overlaydisplayapp.R
 import com.example.overlaydisplayapp.overlayfeature.OverlayActivity
-import com.example.overlaydisplayapp.overlayfeature.commons.checkNotificationPermission
+import com.example.overlaydisplayapp.overlayfeature.commons.cannotShowNotification
 
 class OverlayNotification {
 
+    @SuppressLint("MissingPermission")
     fun build(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !context.checkNotificationPermission()) {
+        if (context.cannotShowNotification()) {
             return
         }
 

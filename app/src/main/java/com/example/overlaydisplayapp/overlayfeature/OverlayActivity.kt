@@ -2,12 +2,11 @@ package com.example.overlaydisplayapp.overlayfeature
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.overlaydisplayapp.overlayfeature.commons.checkNotificationPermission
+import com.example.overlaydisplayapp.overlayfeature.commons.cannotShowNotification
 import com.example.overlaydisplayapp.overlayfeature.commons.startWorker
 
 class OverlayActivity : ComponentActivity() {
@@ -41,7 +40,7 @@ class OverlayActivity : ComponentActivity() {
                 startForResult.launch(it)
             }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !checkNotificationPermission()) {
+        if (cannotShowNotification()) {
             canStartWorker = false
             permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
@@ -49,7 +48,7 @@ class OverlayActivity : ComponentActivity() {
 
     private fun verifyWorker() {
         if (Settings.canDrawOverlays(this)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !checkNotificationPermission()) {
+            if (cannotShowNotification()) {
                 return
             }
 

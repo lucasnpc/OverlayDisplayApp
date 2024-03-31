@@ -1,12 +1,12 @@
 package com.example.overlaydisplayapp.overlayfeature
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.overlaydisplayapp.overlayfeature.commons.cannotShowNotification
+import com.example.overlaydisplayapp.overlayfeature.commons.checkAlarmSchedule
+import com.example.overlaydisplayapp.overlayfeature.commons.checkNotifications
+import com.example.overlaydisplayapp.overlayfeature.commons.checkOverlaySettings
 import com.example.overlaydisplayapp.overlayfeature.commons.startWorker
 
 class OverlayActivity : ComponentActivity() {
@@ -25,34 +25,33 @@ class OverlayActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handlePermissions()
+        checkAppConditions()
         if (canStartWorker)
             startWorker()
     }
 
-    private fun handlePermissions() {
-        if (!Settings.canDrawOverlays(this)) {
+    private fun checkAppConditions() {
+        checkOverlaySettings {
             canStartWorker = false
-            Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName")
-            ).also {
-                startForResult.launch(it)
-            }
+            startForResult.launch(it)
         }
-        if (cannotShowNotification()) {
+        checkAlarmSchedule {
+            canStartWorker = false
+            startForResult.launch(it)
+        }
+        checkNotifications {
             canStartWorker = false
             permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
     private fun verifyWorker() {
-        if (Settings.canDrawOverlays(this)) {
-            if (cannotShowNotification()) {
-                return
-            }
+        if (!checkOverlaySettings { } || !checkNotifications { } || !checkAlarmSchedule { }) {
+            Toast.makeText(this, "Some permission hasn't been given yet.", Toast.LENGTH_SHORT)
+                .show()
+            return
 
-            startWorker()
         }
+        startWorker()
     }
 }

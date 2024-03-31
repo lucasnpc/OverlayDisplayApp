@@ -19,6 +19,6 @@ class AlarmWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     companion object{
-        const val WORKER_NAME = "OverlayAlarm"
+        const val WORKER_NAME = "OverlayAlarmWorker"
     }
 }

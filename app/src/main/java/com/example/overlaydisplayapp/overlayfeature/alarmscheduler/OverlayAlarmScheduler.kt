@@ -23,9 +23,9 @@ class OverlayAlarmScheduler(private val context: Context) : AlarmScheduler {
         )
 
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 15)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
+//            set(Calendar.HOUR_OF_DAY, 15)
+//            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 30)
         }
 
         alarmManager.setExact(

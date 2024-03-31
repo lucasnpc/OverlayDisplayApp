@@ -8,13 +8,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.overlaydisplayapp.R
 import com.example.overlaydisplayapp.overlayfeature.OverlayActivity
-import com.example.overlaydisplayapp.overlayfeature.commons.cannotShowNotification
+import com.example.overlaydisplayapp.overlayfeature.commons.checkNotifications
 
 class OverlayNotification {
 
     @SuppressLint("MissingPermission")
     fun build(context: Context) {
-        if (context.cannotShowNotification()) {
+        if (!context.checkNotifications { }) {
             return
         }
 

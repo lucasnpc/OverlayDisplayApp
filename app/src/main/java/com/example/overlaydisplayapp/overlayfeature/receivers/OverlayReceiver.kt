@@ -17,7 +17,7 @@ class OverlayReceiver : BroadcastReceiver() {
         }
         Intent(context, OverlayService::class.java).also {
             it.action = OverlayActions.START.name
-            context?.startService(it)
+            context?.startForegroundService(it)
         }
     }
 }
